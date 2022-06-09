@@ -34,7 +34,7 @@ class TrainTile extends StatelessWidget {
 
         Navigator.pushNamed(
           context,
-          '/seatmap/srcars',
+          '/srcars',
           arguments: {
             'train': train,
           },

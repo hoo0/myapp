@@ -1,7 +1,4 @@
-import 'dart:collection';
 import 'package:flutter/cupertino.dart';
-
-import 'package:myapp/models/train.dart';
 
 class ScheduleData extends ChangeNotifier {
   bool isLogin = false;

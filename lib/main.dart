@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 
+import 'service_locator.dart';
 import 'flutter_flow_theme.dart';
 import 'routes.dart';
 import 'models/schedule_data.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setupLocator();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

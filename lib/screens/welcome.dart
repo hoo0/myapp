@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../service_locator.dart';
+import '../models/sample.dart';
+
 import '../widgets/common.dart';
 import '../services/station_service.dart';
 import '../services/login_service.dart';
@@ -24,6 +27,10 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
     animationController.repeat(reverse: true);
 
     loadData();
+
+    debugPrint('sample.txt=${getIt<Sample>().text}');
+    getIt<Sample>().text = 'aaa';
+    debugPrint('sample.txt=${getIt<Sample>().text}');
 
     super.initState();
   }

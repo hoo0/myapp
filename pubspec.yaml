@@ -21,10 +21,12 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  get_it: ^7.2.0
 
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^10.1.0
   google_fonts: ^2.3.1
+
   # store
   localstorage: ^4.0.0+1
   shared_preferences: ^2.0.13
@@ -37,7 +39,6 @@ dependencies:
   # loading
   loading_overlay: ^0.3.0
 
-  provider: ^6.0.2
   # network
   dio: ^4.0.4
   dio_cookie_manager: ^2.0.0

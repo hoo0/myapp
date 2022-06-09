@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 
 import 'flutter_flow_theme.dart';
 import 'routes.dart';
 import 'models/schedule_data.dart';
 
-void main() => runApp(
-      ChangeNotifierProvider(
-        create: (_) => ScheduleData(),
-        child: const MyApp(),
-      ),
-    );
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -36,7 +30,9 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('ko', 'KR')], //, Locale('pt', 'BR')],
+      supportedLocales: [
+        Locale('ko', 'KR')
+      ], //, Locale('pt', 'BR')],
     );
   }
 }

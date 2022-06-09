@@ -35,7 +35,7 @@ class RouteConfiguration {
       final args = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
       return TrainsScreen(args: args);
     }),
-    Path('/seatmap/srcars', (context, pattern) {
+    Path('/srcars', (context, pattern) {
       final args = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
       return SrcarsScreen(args: args);
     }),

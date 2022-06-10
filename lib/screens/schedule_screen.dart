@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../service_locator.dart';
+import '../models/sample.dart';
+
 import '../constants.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -31,6 +34,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   void initState() {
     loadStns();
+
+    debugPrint('sample.txt=${getIt<Sample>().text}');
+    getIt<Sample>().text = 'bbb';
+    debugPrint('sample.txt=${getIt<Sample>().text}');
 
     super.initState();
   }

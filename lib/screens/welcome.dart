@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../service_locator.dart';
-import '../models/sample.dart';
-
-import '../widgets/common.dart';
-import '../services/station_service.dart';
 import '../services/login_service.dart';
+import '../widgets/common.dart';
+import '../controllers/login_controller.dart';
+import '../storage.dart';
+import '../services/station_service.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -23,16 +19,16 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+    super.initState();
     animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
     animationController.repeat(reverse: true);
 
-    loadData();
+    asyncInit();
 
-    debugPrint('sample.txt=${getIt<Sample>().text}');
-    getIt<Sample>().text = 'aaa';
-    debugPrint('sample.txt=${getIt<Sample>().text}');
-
-    super.initState();
+    var storage = Storage();
+    storage.print();
+    storage.text = 'aaa';
+    storage.print();
   }
 
   @override
@@ -41,14 +37,23 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  Future<void> asyncInit() async {
+    await StationService.initStation();
+
+    await LoginController.loadEmailPassword((autoLogin, email, password) {
+      if (autoLogin == 'Y') {
+        login(context, email, password);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(title: Text('appbar')),
       body: Stack(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: CachedNetworkImage(
@@ -76,30 +81,10 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
     );
   }
 
-  Future<void> loadData() async {
-    //station info
-    await StationService.getStation();
-    await loadEmailPassword();
-  }
-
-  Future<void> loadEmailPassword() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final String autoLogin = prefs.getString('autoLogin') ?? 'N';
-    final String email = prefs.getString('email') ?? '';
-    final String password = prefs.getString('password') ?? '';
-
-    if (autoLogin == 'Y') {
-      doLogin(email, password);
-    } else {
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-    }
-  }
-
-  void doLogin(String email, String password) async {
+  void login(BuildContext context, String email, String password) async {
     try {
-      var loginData = await LoginService.doLogin(id: email, password: password);
-      debugPrint('welcome.doLogin: loginData=$loginData');
+      var loginData = await LoginService.callLogin(id: email, password: password);
+      debugPrint('login: loginData=$loginData');
 
       if (loginData['status'] != null && loginData['status'] == 'SUCCESS') {
         Navigator.pushNamedAndRemoveUntil(context, '/schedule', (route) => false);
@@ -109,25 +94,21 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
             context: context,
             message: loginData['message'],
             onPressed: () {
-              saveAutoLogin('N');
+              LoginController.saveAutoLogin('N');
               Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
             });
       }
     } catch (e) {
       debugPrint('e=$e');
+
       Common.showMyDialog(
-          context: context,
-          message: 'exception',
-          onPressed: () {
-            saveAutoLogin('N');
-            Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-          });
+        context: context,
+        message: 'exception',
+        onPressed: () {
+          LoginController.saveAutoLogin('N');
+          Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+        },
+      );
     }
-  }
-
-  void saveAutoLogin(String autoLogin) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString('autoLogin', autoLogin);
   }
 }

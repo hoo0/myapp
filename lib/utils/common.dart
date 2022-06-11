@@ -1,44 +1,34 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import '../models/seat2.dart';
 
-bool webmode = true;
+const bool isWeb = kIsWeb;
 
-String floor2(double num) {
-  return num.toStringAsFixed(2);
-}
+var seatTypeList = {'A': 1, 'B': 2, 'C': 3, 'D': 4};
 
-bool isNumeric(String num) {
-  if (int.tryParse(num) != null) {
-    // debugPrint('a is a numeric string');
-    return true;
-  } else {
-    // debugPrint('a is NOT a numeric string');
-    return false;
-  }
-}
+String floor2(double num) => num.toStringAsFixed(2);
+
+bool isNumeric(String num) => int.tryParse(num) != null ? true : false;
 
 SeatInfo getSeatInfo(Seat seat, int seatRowCnt) {
+  String type = "";
   int row = 0;
   int col = 0;
-  String type = "";
 
   var seatNo = seat.seatNo;
   var seatNoStart = seatNo.substring(0, seatNo.length - 1);
   var seatNoEnd = seatNo.substring(seatNo.length - 1, seatNo.length);
   // debugPrint("seatNo=${seat.seatNo} seatNoStart=$seatNoStart seatNoEnd=$seatNoEnd");
 
-  // numeric
   if (int.tryParse(seatNoEnd) != null) {
+    // numeric
     type = "N";
 
     int seatNum = int.parse(seatNo);
-    int portion = (seatNum - 1) ~/ seatRowCnt + 1;
-    int remainder = (seatNum - 1) % seatRowCnt + 1;
-
-    row = portion;
-    col = remainder;
-  }
-  // string
-  else {
+    row = (seatNum - 1) ~/ seatRowCnt + 1;
+    col = (seatNum - 1) % seatRowCnt + 1;
+  } else {
+    // string
     type = "S";
 
     row = int.parse(seatNoStart);
@@ -47,13 +37,6 @@ SeatInfo getSeatInfo(Seat seat, int seatRowCnt) {
 
   return SeatInfo(type, row, col);
 }
-
-var seatTypeList = {
-  'A': 1,
-  'B': 2,
-  'C': 3,
-  'D': 4
-};
 
 class SeatInfo {
   final String type;

@@ -1,14 +1,13 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:myapp/controllers/login_controller.dart';
 
 import '../constants.dart';
 import '../widgets/common.dart';
 import '../services/login_service.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -23,7 +22,15 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    loadEmailPassword();
+
+    LoginController.loadEmailPassword((autoLogin, email, password) {
+      emailController.text = email;
+      passwordController.text = password;
+
+      if (autoLogin == 'Y') {
+        doLogin();
+      }
+    });
   }
 
   @override
@@ -72,53 +79,25 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void loadEmailPassword() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final String? email = prefs.getString('email');
-    final String? password = prefs.getString('password');
-    final String? autoLogin = prefs.getString('autoLogin');
-
-    emailController.text = email ?? '';
-    passwordController.text = password ?? '';
-
-    if (autoLogin != null && autoLogin == 'Y') {
-      doLogin();
-    }
-  }
-
-  void saveEmailPassword() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString('email', emailController.text);
-    await prefs.setString('password', passwordController.text);
-    await prefs.setString('autoLogin', 'Y');
-  }
-
-  void saveAutoLogin(String autoLogin) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString('autoLogin', autoLogin);
-  }
-
   void doLogin() async {
     setState(() {
       showSpinner = true;
     });
 
     try {
-      var loginData = await LoginService.doLogin(id: emailController.text, password: passwordController.text);
+      var loginData = await LoginService.callLogin(id: emailController.text, password: passwordController.text);
       debugPrint('login_screen.doLogin: loginData=$loginData');
 
       if (loginData['status'] != null && loginData['status'] == 'SUCCESS') {
-        saveEmailPassword();
+        LoginController.saveEmailPassword(emailController.text, passwordController.text);
         Navigator.pushNamedAndRemoveUntil(context, '/schedule', (route) => false);
       } else {
-        saveAutoLogin('N');
+        LoginController.saveAutoLogin('N');
         Common.showMyDialog(context: context, message: loginData['message']);
       }
     } catch (e) {
       debugPrint('e=$e');
+
       Common.showMyDialog(context: context, message: e.toString());
     }
 

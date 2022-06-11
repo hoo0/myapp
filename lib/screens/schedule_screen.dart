@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../service_locator.dart';
-import '../models/sample.dart';
-
+import '../storage.dart';
 import '../constants.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -35,9 +33,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   void initState() {
     loadStns();
 
-    debugPrint('sample.txt=${getIt<Sample>().text}');
-    getIt<Sample>().text = 'bbb';
-    debugPrint('sample.txt=${getIt<Sample>().text}');
+    var storage = Storage();
+    storage.print();
+    storage.text = 'bbb';
+    storage.print();
 
     super.initState();
   }
@@ -164,6 +163,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       firstDate: DateTime(2021),
       lastDate: DateTime(2023),
     );
+
     if (picked != null && picked != selectDate) {
       setState(() {
         selectDate = picked;

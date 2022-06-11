@@ -26,7 +26,7 @@ class NetworkService {
   }
 
   static Future getData(String url) async {
-    if (webmode) {
+    if (isWeb) {
       url = webmodeUrl + '/get?path=' + Uri.encodeComponent(url);
     }
     debugPrint('getData: url=$url');
@@ -48,7 +48,7 @@ class NetworkService {
     debugPrint('postData: url=$url');
     debugPrint('postData: queryParameters=$queryParameters');
 
-    if (webmode) {
+    if (isWeb) {
       if (queryParameters != null) {
         queryParameters['path'] = Uri.encodeComponent(url);
       }

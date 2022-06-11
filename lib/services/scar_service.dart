@@ -13,24 +13,3 @@ class SrcarService {
     ).then((response) => jsonDecode(response.data));
   }
 }
-/*
-Device
-Version
-Key
-txtMenuId
-txtRunDt
-txtDptDt
-txtTrnNo
-txtDptTm
-txtTrnClsfCd
-txtTrnGpCd
-txtDptRsStnCd
-txtArvRsStnCd
-txtPsrmClCd
-txtSeatAttCd
-txtCustSrtCd
-txtDptStnRunOrdr
-txtArvStnRunOrdr
-txtTotPsgCnt
-txtGdNo
-     */

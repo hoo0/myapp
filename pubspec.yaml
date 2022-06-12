@@ -32,7 +32,11 @@ dependencies:
   localstorage: ^4.0.0+1
   shared_preferences: ^2.0.13
 
-  cached_network_image: ^3.2.0
+  cached_network_image: 
+    git:
+        url: https://github.com/XuannThucc/flutter_cached_network_image.git
+        path: cached_network_image
+        ref: ff72f00f142f13d889d7549e013af91cb0b523ab 
   # spin
   flutter_spinkit: ^5.1.0
   # loading

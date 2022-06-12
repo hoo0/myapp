@@ -12,7 +12,7 @@ class LoginController {
       ..loadingStyle = EasyLoadingStyle.light;
 
     EasyLoading.show(
-      status: 'loading...',
+      // status: 'loading...',
       maskType: EasyLoadingMaskType.black,
     );
 

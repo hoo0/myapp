@@ -7,7 +7,10 @@ import '../widgets/common.dart';
 
 class LoginController {
   static void doLogin(BuildContext context, email, password) async {
-    EasyLoading.show(status: 'loading...');
+    EasyLoading.show(
+      status: 'loading...',
+      maskType: EasyLoadingMaskType.black,
+    );
 
     try {
       var loginData = await LoginService.callLogin(id: email, password: password);

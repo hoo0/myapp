@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:myapp/controllers/login_controller.dart';
 
 import '../constants.dart';
-import '../widgets/common.dart';
-import '../services/login_service.dart';
+import '../controllers/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -19,7 +17,7 @@ class LoginScreen extends StatelessWidget {
       passwordController.text = password;
 
       if (autoLogin == 'Y') {
-        doLogin(context);
+        LoginController.doLogin(context, emailController.text, passwordController.text);
       }
     });
 
@@ -57,38 +55,13 @@ class LoginScreen extends StatelessWidget {
               RoundedButton(
                 title: 'Log In',
                 color: Colors.lightBlueAccent,
-                onPressed: () => doLogin(context),
+                onPressed: () => LoginController.doLogin(context, emailController.text, passwordController.text),
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void doLogin(BuildContext context) async {
-    context.loaderOverlay.show();
-
-    try {
-      var loginData = await LoginService.callLogin(id: emailController.text, password: passwordController.text);
-      debugPrint('login_screen.doLogin: loginData=$loginData');
-
-      context.loaderOverlay.hide();
-
-      if (loginData['status'] != null && loginData['status'] == 'SUCCESS') {
-        LoginController.saveEmailPassword(emailController.text, passwordController.text);
-        Navigator.pushNamedAndRemoveUntil(context, '/schedule', (route) => false);
-      } else {
-        LoginController.saveAutoLogin('N');
-        Common.showMyDialog(context: context, message: loginData['message']);
-      }
-    } catch (e) {
-      debugPrint('e=$e');
-
-      Common.showMyDialog(context: context, message: e.toString());
-    }
-
-    context.loaderOverlay.hide();
   }
 }
 

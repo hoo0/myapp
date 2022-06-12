@@ -7,6 +7,8 @@ import '../widgets/common.dart';
 
 class LoginController {
   static void doLogin(BuildContext context, email, password) async {
+    EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.fadingCircle;
+
     EasyLoading.show(
       status: 'loading...',
       maskType: EasyLoadingMaskType.black,

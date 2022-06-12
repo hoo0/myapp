@@ -32,7 +32,7 @@ dependencies:
   localstorage: ^4.0.0+1
   shared_preferences: ^2.0.13
 
-  cached_network_image: ^3.1.9
+  cached_network_image: ^3.2.0
   # spin
   flutter_spinkit: ^5.1.0
   # loading

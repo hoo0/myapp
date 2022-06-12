@@ -35,11 +35,6 @@ class _SrcarsScreenState extends State<SrcarsScreen> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
-
-    train = context.read<TrainProvider>().train;
-
-    setTitle();
-    callService();
   }
 
   void setTitle() {
@@ -52,6 +47,11 @@ class _SrcarsScreenState extends State<SrcarsScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    train = context.read<TrainProvider>().train;
+
+    setTitle();
+    callService();
+
     return srcars.isNotEmpty ? mainWidget(context) : errorWidget(context);
   }
 

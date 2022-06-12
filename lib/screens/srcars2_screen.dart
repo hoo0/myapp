@@ -21,7 +21,7 @@ class SrcarsScreen extends StatefulWidget {
 }
 
 class _SrcarsScreenState extends State<SrcarsScreen> with SingleTickerProviderStateMixin {
-  late final Train train;
+  late Train train;
   late TrainSchedule trainSchedule;
   final List<Srcar> srcars = [];
 

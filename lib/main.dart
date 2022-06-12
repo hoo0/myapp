@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/providers/login_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 
 import 'storage.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/welcome',
       routes: routesMap,
+      builder: EasyLoading.init(),
     );
   }
 }

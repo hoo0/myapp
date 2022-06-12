@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 
 import '../constants.dart';
 import '../controllers/login_controller.dart';
@@ -23,42 +22,40 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text('login')),
-      body: LoaderOverlay(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              // Flexible(
-              //   child: Hero(
-              //     tag: 'logo',
-              //     child: Container(
-              //       height: 200.0,
-              //       child: Image.asset('images/logo.png'),
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: 48.0),
-              TextField(
-                controller: emailController,
-                textAlign: TextAlign.center,
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
-              ),
-              SizedBox(height: 8.0),
-              TextField(
-                controller: passwordController,
-                textAlign: TextAlign.center,
-                obscureText: true,
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password.'),
-              ),
-              SizedBox(height: 24.0),
-              RoundedButton(
-                title: 'Log In',
-                color: Colors.lightBlueAccent,
-                onPressed: () => LoginController.doLogin(context, emailController.text, passwordController.text),
-              ),
-            ],
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            // Flexible(
+            //   child: Hero(
+            //     tag: 'logo',
+            //     child: Container(
+            //       height: 200.0,
+            //       child: Image.asset('images/logo.png'),
+            //     ),
+            //   ),
+            // ),
+            SizedBox(height: 48.0),
+            TextField(
+              controller: emailController,
+              textAlign: TextAlign.center,
+              decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
+            ),
+            SizedBox(height: 8.0),
+            TextField(
+              controller: passwordController,
+              textAlign: TextAlign.center,
+              obscureText: true,
+              decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password.'),
+            ),
+            SizedBox(height: 24.0),
+            RoundedButton(
+              title: 'Log In',
+              color: Colors.lightBlueAccent,
+              onPressed: () => LoginController.doLogin(context, emailController.text, passwordController.text),
+            ),
+          ],
         ),
       ),
     );

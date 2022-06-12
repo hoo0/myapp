@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:myapp/controllers/schedule_controller.dart';
+import 'package:myapp/providers/schedule_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../storage.dart';
 import '../constants.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -13,14 +14,6 @@ class ScheduleScreen extends StatefulWidget {
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
-  DateTime get currentDate {
-    return DateTime.now();
-  }
-
-  TimeOfDay get currentTime {
-    return TimeOfDay.now();
-  }
-
   DateTime selectDate = DateTime.now();
   TimeOfDay selectTime = TimeOfDay.now();
 
@@ -31,25 +24,29 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   @override
   void initState() {
-    loadStns();
-
-    var storage = Storage();
-    storage.print();
-    storage.text = 'bbb';
-    storage.print();
-
     super.initState();
+
+    ScheduleController.loadStns((dptStn, arvStn, trnGpCd) {
+      setState(() {
+        dptStnController.text = dptStn ?? '서울';
+        arvStnController.text = arvStn ?? '부산';
+        this.trnGpCd = trnGpCd ?? '109';
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(''), actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: logout,
-          )
-        ]),
+        appBar: AppBar(
+          title: Text('Schedule'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () => ScheduleController.logout(context),
+            )
+          ],
+        ),
         body: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
           padding: EdgeInsets.all(10),
@@ -118,7 +115,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     // VerticalDivider(width: 20, color: Colors.grey),
                     TextButton(
                       child: Icon(Icons.change_circle),
-                      onPressed: changeStns,
+                      onPressed: () => ScheduleController.changeStns(dptStnController, arvStnController),
                     ),
                     Flexible(
                       child: TextField(
@@ -134,19 +131,17 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    saveStns();
+                    ScheduleController.saveStns(dptStnController.text, arvStnController.text, trnGpCd);
 
-                    Navigator.pushNamed(
-                      context,
-                      '/trains',
-                      arguments: {
-                        'trnGpCd': trnGpCd,
-                        'dptDt': dptDt,
-                        'dptTm': dptTm,
-                        'dptStn': dptStnController.text,
-                        'arvStn': arvStnController.text,
-                      },
-                    );
+                    context.read<ScheduleProvider>().setScheduleProvider(
+                          trnGpCd,
+                          dptDt,
+                          dptTm,
+                          dptStnController.text,
+                          arvStnController.text,
+                        );
+
+                    Navigator.pushNamed(context, '/trains');
                   },
                   child: Text('search'),
                 ),
@@ -159,16 +154,16 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   _showDatePicker(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectDate, // Refer step 1
-      firstDate: DateTime(2021),
-      lastDate: DateTime(2023),
+      initialDate: selectDate,
+      firstDate: DateTime(DateTime.now().year - 1),
+      lastDate: DateTime(DateTime.now().year + 1),
     );
 
     if (picked != null && picked != selectDate) {
       setState(() {
         selectDate = picked;
-        if (dptDt == DateFormat('yyyyMMdd').format(currentDate)) {
-          selectTime = currentTime;
+        if (dptDt == DateFormat('yyyyMMdd').format(DateTime.now())) {
+          selectTime = TimeOfDay.now();
         } else {
           selectTime = TimeOfDay(hour: 0, minute: 0);
         }
@@ -213,43 +208,5 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     final now = DateTime.now();
     final datetime = DateTime(now.year, now.month, now.day, selectTime.hour, selectTime.minute);
     return DateFormat('HHmm').format(datetime);
-  }
-
-  void loadStns() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-
-      setState(() {
-        dptStnController.text = prefs.getString('dptStn') ?? '서울';
-        arvStnController.text = prefs.getString('arvStn') ?? '부산';
-        trnGpCd = prefs.getString('trnGpCd') ?? '109';
-      });
-    } catch (e) {
-      SharedPreferences.setMockInitialValues({});
-    }
-  }
-
-  void saveStns() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString('dptStn', dptStnController.text);
-    await prefs.setString('arvStn', arvStnController.text);
-    await prefs.setString('trnGpCd', trnGpCd);
-  }
-
-  void changeStns() async {
-    var dptStn = dptStnController.text;
-    var arvStn = arvStnController.text;
-
-    setState(() {
-      dptStnController.text = arvStn;
-      arvStnController.text = dptStn;
-    });
-  }
-
-  void logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('autoLogin', 'N');
-    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 }

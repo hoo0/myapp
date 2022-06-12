@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/train_provider.dart';
 import '../models/train.dart';
 
 class TrainTile extends StatelessWidget {
@@ -32,13 +34,9 @@ class TrainTile extends StatelessWidget {
       onTap: () {
         debugPrint('${train.trnNo}');
 
-        Navigator.pushNamed(
-          context,
-          '/srcars',
-          arguments: {
-            'train': train,
-          },
-        );
+        context.read<TrainProvider>().setTrain(train);
+
+        Navigator.pushNamed(context, '/srcars');
       },
     );
   }

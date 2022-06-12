@@ -1,44 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:loading_overlay/loading_overlay.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:myapp/controllers/login_controller.dart';
 
 import '../constants.dart';
 import '../widgets/common.dart';
 import '../services/login_service.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  bool showSpinner = false;
+class LoginScreen extends StatelessWidget {
+  LoginScreen({Key? key}) : super(key: key);
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-
+  Widget build(BuildContext context) {
     LoginController.loadEmailPassword((autoLogin, email, password) {
       emailController.text = email;
       passwordController.text = password;
 
       if (autoLogin == 'Y') {
-        doLogin();
+        doLogin(context);
       }
     });
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('login')),
-      body: LoadingOverlay(
-        isLoading: showSpinner,
+      body: LoaderOverlay(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               RoundedButton(
                 title: 'Log In',
                 color: Colors.lightBlueAccent,
-                onPressed: doLogin,
+                onPressed: () => doLogin(context),
               ),
             ],
           ),
@@ -79,14 +66,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void doLogin() async {
-    setState(() {
-      showSpinner = true;
-    });
+  void doLogin(BuildContext context) async {
+    context.loaderOverlay.show();
 
     try {
       var loginData = await LoginService.callLogin(id: emailController.text, password: passwordController.text);
       debugPrint('login_screen.doLogin: loginData=$loginData');
+
+      context.loaderOverlay.hide();
 
       if (loginData['status'] != null && loginData['status'] == 'SUCCESS') {
         LoginController.saveEmailPassword(emailController.text, passwordController.text);
@@ -101,9 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Common.showMyDialog(context: context, message: e.toString());
     }
 
-    setState(() {
-      showSpinner = false;
-    });
+    context.loaderOverlay.hide();
   }
 }
 

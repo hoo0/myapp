@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/services/train_schedule_service.dart';
+import 'package:provider/provider.dart';
 
 import '../models/train_schedule.dart';
+import '../providers/train_provider.dart';
 import '../services/scar_service.dart';
 import '../models/train.dart';
 import '../models/srcar.dart';
@@ -32,12 +34,12 @@ class _SrcarsScreenState extends State<SrcarsScreen> with SingleTickerProviderSt
 
   @override
   void initState() {
-    train = widget.args['train'] as Train;
+    super.initState();
+
+    train = context.read<TrainProvider>().train;
 
     setTitle();
-    callService(train);
-
-    super.initState();
+    callService();
   }
 
   void setTitle() {
@@ -90,7 +92,7 @@ class _SrcarsScreenState extends State<SrcarsScreen> with SingleTickerProviderSt
     );
   }
 
-  void callService(Train train) async {
+  void callService() async {
     try {
       List<Srcar> tempSrcars = [];
 
@@ -113,20 +115,18 @@ class _SrcarsScreenState extends State<SrcarsScreen> with SingleTickerProviderSt
       debugPrint('srcarData=$srcarData');
       // debugPrint("srcarData['strResult']=${srcarData['strResult']}");
 
-      if (srcarData['strResult'] != 'SUCC') {
-        setState(() {
-          result = srcarData['strResult'];
-          message = srcarData['h_msg_txt'];
-        });
-      }
-      // debugPrint('109');
       if (srcarData['strResult'] == 'SUCC') {
         var srcarInfos = srcarData['srcar_infos']['srcar_info'] as List;
         srcarInfos.map((srcarInfo) {
           tempSrcars.add(Srcar.createBySrcarInfo(srcarInfo));
         }).toList();
+      } else {
+        setState(() {
+          result = srcarData['strResult'];
+          message = srcarData['h_msg_txt'];
+        });
       }
-      // debugPrint('116');
+
       var srcarData2 = await SrcarService.getSrcar(
         dptDt: train.dptDt,
         trnNo: train.trnNo,
@@ -141,9 +141,7 @@ class _SrcarsScreenState extends State<SrcarsScreen> with SingleTickerProviderSt
         srcarInfos2.map((srcarInfo) {
           tempSrcars.add(Srcar.createBySrcarInfo(srcarInfo));
         }).toList();
-      }
-
-      if (srcarData2['strResult'] != 'SUCC') {
+      } else {
         setState(() {
           result = srcarData2['strResult'];
           message = srcarData2['h_msg_txt'];

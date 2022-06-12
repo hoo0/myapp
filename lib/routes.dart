@@ -12,7 +12,8 @@ Map<String, WidgetBuilder> routesMap = {
   '/login': (context) => LoginScreen(),
   '/schedule': (context) => ScheduleScreen(),
   '/schedule2': (context) => Schedule2Screen(),
-  '/trains': (context) => TrainsScreen(args: ModalRoute.of(context)?.settings.arguments),
-  '/srcars': (context) => SrcarsScreen(args: ModalRoute.of(context)?.settings.arguments),
+  '/trains': (context) => TrainsScreen(),
+  '/srcars': (context) => SrcarsScreen(),
 };
+// TrainsScreen(args: ModalRoute.of(context)?.settings.arguments),
 // final args = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;

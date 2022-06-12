@@ -1,5 +1,5 @@
-import 'package:myapp/constants.dart';
-import 'package:myapp/models/train_schedule.dart';
+import '../constants.dart';
+import 'train_schedule.dart';
 
 class Train {
   final String trnNo;
@@ -57,19 +57,20 @@ class Train {
     );
   }
 
+  String get trnGpName {
+    return trnGpCdMap[trnGpCd] ?? trnGpCd;
+  }
+
   static String convertTrnNo(String trnNo) {
     int iTrnNo = int.parse(trnNo);
     String sTrnNo = iTrnNo.toString();
     int length = sTrnNo.length;
+
     for (int i = 0; i < 5 - length; i++) {
       sTrnNo = '0' + sTrnNo;
       // debugPrint('sTrnNo=$sTrnNo');
     }
 
     return sTrnNo;
-  }
-
-  String get trnGpName {
-    return trnGpCdMap[trnGpCd] ?? trnGpCd;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/models/train_schedule.dart';
 
 import '../models/seat_row.dart';
 import '../services/seat2_service.dart';
@@ -89,7 +88,6 @@ class _SrcarSeatsScreen extends State<SrcarSeatsScreen> with AutomaticKeepAliveC
 
   void makeFourSeats(Train train, Srcar srcar, Seat seat, bool last) {
     int seatRowCnt = srcar.psrmClCd == '2' ? 3 : 4;
-    bool isNumber = isNumeric(seat.seatNo);
 
     // debugPrint('last=$last');
     // debugPrint('isNumber=$isNumber');

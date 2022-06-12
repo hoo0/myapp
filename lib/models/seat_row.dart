@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:myapp/models/train.dart';
-import 'package:myapp/models/train_schedule.dart';
 
 import 'seat2.dart';
 

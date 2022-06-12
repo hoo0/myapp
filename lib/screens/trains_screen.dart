@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/schedule_provider.dart';
 import '../services/schedule_service.dart';
 import '../models/train.dart';
 import '../widgets/train_tile.dart';
 import '../widgets/error_message.dart';
 
 class TrainsScreen extends StatefulWidget {
-  const TrainsScreen({Key? key, this.args}) : super(key: key);
-
-  final dynamic args;
+  const TrainsScreen({Key? key}) : super(key: key);
 
   @override
   State<TrainsScreen> createState() => _TrainsScreenState();
@@ -16,6 +16,12 @@ class TrainsScreen extends StatefulWidget {
 
 class _TrainsScreenState extends State<TrainsScreen> {
   ScrollController scrollController = ScrollController();
+
+  var trnGpCd = '';
+  var dptDt = '';
+  var dptTm = '';
+  var dptStn = '';
+  var arvStn = '';
 
   final List<Train> trains = [];
   var title = '';
@@ -28,8 +34,17 @@ class _TrainsScreenState extends State<TrainsScreen> {
 
   @override
   void initState() {
-    setTitle(widget.args);
-    callService(widget.args);
+    super.initState();
+    var provider = context.read<ScheduleProvider>();
+
+    trnGpCd = provider.trnGpCd;
+    dptDt = provider.dptDt;
+    dptTm = provider.dptTm;
+    dptStn = provider.dptStn;
+    arvStn = provider.arvStn;
+
+    setTitle();
+    callService();
 
     scrollController.addListener(() {
       // setState(() {
@@ -40,8 +55,6 @@ class _TrainsScreenState extends State<TrainsScreen> {
         moreData();
       }
     });
-
-    super.initState();
   }
 
   @override
@@ -113,25 +126,24 @@ class _TrainsScreenState extends State<TrainsScreen> {
 
     debugPrint("push up");
 
-    var args = Map<String, dynamic>.from(widget.args); // deep copy
-    args['dptTm'] = trains[trains.length - 1].dptTm; // 마지막 열차의 시간으로 조회한다
+    dptTm = trains[trains.length - 1].dptTm; // 마지막 열차의 시간으로 조회한다
 
     Future.delayed(Duration(seconds: 1)).then((e) {
-      callService(args);
+      callService();
     });
   }
 
-  Future<void> callService(Map<String, dynamic> args) async {
+  Future<void> callService() async {
     if (running) return;
     running = true;
 
     try {
       var scheduleData = await ScheduleService.getSchedule(
-        trnGpCd: args['trnGpCd'],
-        dptDt: args['dptDt'],
-        dptTm: args['dptTm'],
-        dptStn: args['dptStn'],
-        arvStn: args['arvStn'],
+        trnGpCd: trnGpCd,
+        dptDt: dptDt,
+        dptTm: dptTm,
+        dptStn: dptStn,
+        arvStn: arvStn,
       );
       // debugPrint("scheduleData=$scheduleData");
 
@@ -181,10 +193,10 @@ class _TrainsScreenState extends State<TrainsScreen> {
     });
   }
 
-  setTitle(Map<String, dynamic> args) {
-    var _dptDt = args['dptDt'].substring(4, 6) + '/' + args['dptDt'].substring(6, 8);
-    var _dptTm = args['dptTm'].substring(0, 2) + ':' + args['dptTm'].substring(2, 4);
+  setTitle() {
+    var _dptDt = dptDt.substring(4, 6) + '/' + dptDt.substring(6, 8);
+    var _dptTm = dptTm.substring(0, 2) + ':' + dptTm.substring(2, 4);
 
-    title = '$_dptDt $_dptTm ${args['dptStn']} ${args['arvStn']}';
+    title = '$_dptDt $_dptTm $dptStn $arvStn';
   }
 }

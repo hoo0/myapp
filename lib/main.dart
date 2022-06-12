@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/providers/login_provider.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 
 import 'storage.dart';
+import 'providers/schedule_provider.dart';
+import 'providers/train_provider.dart';
 
 // import 'flutter_flow_theme.dart';
 import 'routes.dart';
 
 void main() {
   Storage();
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LoginProvider()),
+        ChangeNotifierProvider(create: (_) => ScheduleProvider()),
+        ChangeNotifierProvider(create: (_) => TrainProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

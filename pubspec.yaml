@@ -40,7 +40,7 @@ dependencies:
   # spin
   flutter_spinkit: ^5.1.0
   # loading
-  loader_overlay: ^2.0.6
+  loader_overlay: ^2.0.0
 
   # network
   dio: ^4.0.4

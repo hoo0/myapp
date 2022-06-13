@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../models/train_schedule.dart';
 import '../providers/train_provider.dart';
-import '../providers/srcars_provider.dart';
 import '../services/scar_service.dart';
 import '../models/train.dart';
 import '../models/srcar.dart';
@@ -12,16 +11,36 @@ import 'srcars2_seats2_screen.dart';
 
 import '../widgets/error_message.dart';
 
-class SrcarsScreen extends StatelessWidget {
-  SrcarsScreen({Key? key}) : super(key: key);
+class SrcarsScreen extends StatefulWidget {
+  const SrcarsScreen({Key? key, this.args}) : super(key: key);
 
-  late Train train;
+  final dynamic args;
+
+  @override
+  State<SrcarsScreen> createState() => _SrcarsScreenState();
+}
+
+class _SrcarsScreenState extends State<SrcarsScreen> with SingleTickerProviderStateMixin {
+  late final Train train;
   late TrainSchedule trainSchedule;
+  final List<Srcar> srcars = [];
 
   final List<Widget> srcarTabs = [];
   final List<Widget> srcarTabViews = [];
 
   var title = '';
+  var result = '';
+  var message = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    train = context.read<TrainProvider>().train;
+
+    setTitle();
+    callService();
+  }
 
   void setTitle() {
     var trnNo = '#' + int.parse(train.trnNo).toString();
@@ -33,17 +52,10 @@ class SrcarsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    train = context.read<TrainProvider>().train;
-
-    setTitle();
-    callService(context);
-
-    return context.read<SrcarsProvider>().srcars.isNotEmpty ? mainWidget(context) : errorWidget(context);
+    return srcars.isNotEmpty ? mainWidget(context) : errorWidget(context);
   }
 
   Widget errorWidget(BuildContext context) {
-    String message = context.read<SrcarsProvider>().message;
-
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: ErrorMessage(message: message),
@@ -52,16 +64,14 @@ class SrcarsScreen extends StatelessWidget {
 
   Widget mainWidget(BuildContext context) {
     return DefaultTabController(
-      length: context.read<SrcarsProvider>().srcars.length,
+      length: srcars.length,
       child: Scaffold(
         appBar: AppBar(
           title: Text(title),
           bottom: TabBar(
             isScrollable: true,
             tabs: <Tab>[
-              ...context
-                  .read<SrcarsProvider>()
-                  .srcars
+              ...srcars
                   .map(
                     (srcar) => Tab(text: int.parse(srcar.srcarNo).toString()),
                   )
@@ -71,9 +81,7 @@ class SrcarsScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            ...context
-                .read<SrcarsProvider>()
-                .srcars
+            ...srcars
                 .map(
                   (srcar) => SrcarSeatsScreen(train: train, srcar: srcar),
                 )
@@ -84,10 +92,7 @@ class SrcarsScreen extends StatelessWidget {
     );
   }
 
-  void callService(BuildContext context) async {
-    String result = '';
-    String message = '';
-
+  void callService() async {
     try {
       List<Srcar> tempSrcars = [];
 
@@ -116,9 +121,10 @@ class SrcarsScreen extends StatelessWidget {
           tempSrcars.add(Srcar.createBySrcarInfo(srcarInfo));
         }).toList();
       } else {
-        result = srcarData['strResult'];
-        message = srcarData['h_msg_txt'];
-        context.read<SrcarsProvider>().setResult(result, message);
+        setState(() {
+          result = srcarData['strResult'];
+          message = srcarData['h_msg_txt'];
+        });
       }
 
       var srcarData2 = await SrcarService.getSrcar(
@@ -136,16 +142,19 @@ class SrcarsScreen extends StatelessWidget {
           tempSrcars.add(Srcar.createBySrcarInfo(srcarInfo));
         }).toList();
       } else {
-        result = srcarData2['strResult'];
-        message = srcarData2['h_msg_txt'];
-        context.read<SrcarsProvider>().setResult(result, message);
+        setState(() {
+          result = srcarData2['strResult'];
+          message = srcarData2['h_msg_txt'];
+        });
       }
       debugPrint('result=$result message=$message');
 
       if (tempSrcars.isNotEmpty) {
         tempSrcars.sort((Srcar a, Srcar b) => int.parse(a.srcarNo).compareTo(int.parse(b.srcarNo)));
 
-        context.read<SrcarsProvider>().addAllSrcar(tempSrcars);
+        setState(() {
+          srcars.addAll(tempSrcars);
+        });
       }
     } catch (e) {
       debugPrint('e=$e');

@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'storage.dart';
 import 'providers/schedule_provider.dart';
 import 'providers/train_provider.dart';
+import '../providers/srcars_provider.dart';
 
 // import 'flutter_flow_theme.dart';
 import 'routes.dart';
@@ -19,6 +20,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => ScheduleProvider()),
         ChangeNotifierProvider(create: (_) => TrainProvider()),
+        ChangeNotifierProvider(create: (_) => SrcarsProvider()),
       ],
       child: const MyApp(),
     ),

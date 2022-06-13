@@ -24,7 +24,7 @@ class LoginController {
 
       if (loginData['status'] != null && loginData['status'] == 'SUCCESS') {
         LoginController.saveEmailPassword(email, password);
-        Navigator.pushNamedAndRemoveUntil(context, '/schedule', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, '/schedule2', (route) => false);
       } else {
         LoginController.saveAutoLogin('N');
         Common.showMyDialog(context: context, message: loginData['message']);

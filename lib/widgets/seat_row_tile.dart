@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/constants.dart';
 
-import '../models/seat2.dart';
 import '../models/seat_row.dart';
-import '../services/station_service.dart';
 
 class SeatRowTile extends StatelessWidget {
   SeatRowTile({Key? key, required this.seatRow}) : super(key: key);
@@ -12,11 +9,6 @@ class SeatRowTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var rout = seat.dptRsStnCd == '' ? '' : seat.dptRsStnCd + '-' + seat.arvRsStnCd;
-    // rout = seat.dptRsStnCd == '' ? '' : StationService.getStationName(seat.dptRsStnCd) + '-' + StationService.getStationName(seat.arvRsStnCd);
-
-    // debugPrint("seatRow.segLength=${seatRow.segLength}");
-
     return InkWell(
       child: Container(
         height: 50,

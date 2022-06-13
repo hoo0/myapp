@@ -12,9 +12,7 @@ import 'srcars2_seats2_screen.dart';
 import '../widgets/error_message.dart';
 
 class SrcarsScreen extends StatefulWidget {
-  const SrcarsScreen({Key? key, this.args}) : super(key: key);
-
-  final dynamic args;
+  const SrcarsScreen({Key? key}) : super(key: key);
 
   @override
   State<SrcarsScreen> createState() => _SrcarsScreenState();

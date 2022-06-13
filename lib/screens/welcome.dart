@@ -87,7 +87,7 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
       debugPrint('login: loginData=$loginData');
 
       if (loginData['status'] != null && loginData['status'] == 'SUCCESS') {
-        Navigator.pushNamedAndRemoveUntil(context, '/schedule', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, '/schedule2', (route) => false);
         return;
       } else {
         Common.showMyDialog(

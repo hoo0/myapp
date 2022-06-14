@@ -99,7 +99,7 @@ class ScheduleSectionScreen extends StatelessWidget {
                         focusedBorder: InputBorder.none,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
+                            // fontFamily: 'Poppins',
                             color: Color(0xFF004676),
                             fontSize: 30,
                             fontWeight: FontWeight.w600,

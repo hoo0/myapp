@@ -88,23 +88,14 @@ class ScheduleSectionScreen extends StatelessWidget {
                   decoration: BoxDecoration(),
                   child: Align(
                     alignment: AlignmentDirectional(0, 0),
-                    child: TextFormField(
-                      // controller: textController,
-                      onChanged: (_) {},
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: '천안아산',
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
+                    child: Text(
+                      '천안아산',
                       style: FlutterFlowTheme.of(context).bodyText1.copyWith(
-                            // fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             color: Color(0xFF004676),
                             fontSize: 30,
                             fontWeight: FontWeight.w600,
                           ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),

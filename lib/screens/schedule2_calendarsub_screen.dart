@@ -12,64 +12,6 @@ class ScheduleCalendarsubScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-            child: Container(
-              width: double.infinity,
-              height: 30,
-              decoration: BoxDecoration(
-                color: Color(0xFFEEEEEE),
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                height: 40,
-                child: OutlinedButton(
-                  onPressed: () {
-                    debugPrint('Button pressed ...');
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        side: BorderSide(
-                          color: Color(0xFF8D8D8D),
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: Text(
-                    "달력에서 날짜 선택",
-                    style: FlutterFlowTheme.of(context).subtitle2.copyWith(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                        ),
-                  ),
-                ),
-              ),
-              // child: FFButtonWidget(
-              //   onPressed: () {
-              //     print('Button pressed ...');
-              //   },
-              //   text: '달력에서 날짜 선택',
-              //   options: FFButtonOptions(
-              //     width: double.infinity,
-              //     height: 40,
-              //     color: Colors.white,
-              //     textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-              //           color: Colors.black,
-              //           fontSize: 16,
-              //         ),
-              //     borderSide: BorderSide(
-              //       color: Color(0xFF8D8D8D),
-              //       width: 1,
-              //     ),
-              //     borderRadius: 12,
-              //   ),
-              // ),
-            ),
-          ),
           Container(
             width: double.infinity,
             height: 50,

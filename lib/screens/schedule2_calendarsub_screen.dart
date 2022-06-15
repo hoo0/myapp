@@ -23,7 +23,7 @@ class ScheduleCalendarsubScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 Container(
-                  width: 100,
+                  width: 50,
                   height: 50,
                   alignment: AlignmentDirectional(0, 0),
                   decoration: BoxDecoration(

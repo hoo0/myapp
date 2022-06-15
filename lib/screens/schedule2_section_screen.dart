@@ -83,7 +83,7 @@ class ScheduleSectionScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  width: 100,
+                  // width: 100,
                   height: 50,
                   decoration: BoxDecoration(),
                   child: Align(
@@ -98,6 +98,10 @@ class ScheduleSectionScreen extends StatelessWidget {
                       // ),
                       autofocus: true,
                       obscureText: false,
+                      decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                      ),
                       // decoration: InputDecoration(
                       //   enabledBorder: OutlineInputBorder(
                       //     borderSide: BorderSide(

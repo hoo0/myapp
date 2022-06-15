@@ -51,7 +51,7 @@ class ScheduleCalendarsubScreen extends StatelessWidget {
                           style: FlutterFlowTheme.of(context).bodyText1.copyWith(
                                 fontFamily: 'Roboto',
                                 color: Colors.white,
-                                fontSize: 22.0,
+                                fontSize: 8.0,
                               ),
                         ),
                       ),

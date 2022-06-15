@@ -109,16 +109,16 @@ class ScheduleSectionScreen extends StatelessWidget {
                             topRight: Radius.circular(4.0),
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //     color: Color(0x00000000),
+                        //     width: 1,
+                        //   ),
+                        //   borderRadius: const BorderRadius.only(
+                        //     topLeft: Radius.circular(4.0),
+                        //     topRight: Radius.circular(4.0),
+                        //   ),
+                        // ),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.copyWith(
                             fontFamily: 'Poppins',

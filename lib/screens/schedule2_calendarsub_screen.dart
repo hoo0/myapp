@@ -46,13 +46,12 @@ class ScheduleCalendarsubScreen extends StatelessWidget {
                       Align(
                         alignment: AlignmentDirectional(0, 1),
                         child: Text(
-                          '출발일',
+                          '11',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context).bodyText1.copyWith(
                                 fontFamily: 'Roboto',
                                 color: Colors.white,
-                                fontSize: 8,
-                                fontWeight: FontWeight.w100,
+                                fontSize: 22.0,
                               ),
                         ),
                       ),

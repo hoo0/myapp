@@ -98,28 +98,28 @@ class ScheduleSectionScreen extends StatelessWidget {
                       // ),
                       autofocus: true,
                       obscureText: false,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        // focusedBorder: OutlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //     color: Color(0x00000000),
-                        //     width: 1,
-                        //   ),
-                        //   borderRadius: const BorderRadius.only(
-                        //     topLeft: Radius.circular(4.0),
-                        //     topRight: Radius.circular(4.0),
-                        //   ),
-                        // ),
-                      ),
+                      // decoration: InputDecoration(
+                      //   enabledBorder: OutlineInputBorder(
+                      //     borderSide: BorderSide(
+                      //       color: Color(0x00000000),
+                      //       width: 1,
+                      //     ),
+                      //     borderRadius: const BorderRadius.only(
+                      //       topLeft: Radius.circular(4.0),
+                      //       topRight: Radius.circular(4.0),
+                      //     ),
+                      //   ),
+                      //   // focusedBorder: OutlineInputBorder(
+                      //   //   borderSide: BorderSide(
+                      //   //     color: Color(0x00000000),
+                      //   //     width: 1,
+                      //   //   ),
+                      //   //   borderRadius: const BorderRadius.only(
+                      //   //     topLeft: Radius.circular(4.0),
+                      //   //     topRight: Radius.circular(4.0),
+                      //   //   ),
+                      //   // ),
+                      // ),
                       style: FlutterFlowTheme.of(context).bodyText1.copyWith(
                             fontFamily: 'Poppins',
                             color: Color(0xFF004676),

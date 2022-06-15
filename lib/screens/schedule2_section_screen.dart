@@ -89,6 +89,7 @@ class ScheduleSectionScreen extends StatelessWidget {
                   child: Align(
                     alignment: AlignmentDirectional(0, 0),
                     child: TextFormField(
+                      initialValue: '천안아산',
                       // controller: textController,
                       // onChanged: (_) => EasyDebounce.debounce(
                       //   'textController',

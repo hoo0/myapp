@@ -36,7 +36,7 @@ class ScheduleCalendarsubScreen extends StatelessWidget {
                           '11',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context).bodyText1.copyWith(
-                                fontFamily: 'KORAIL',
+                                fontFamily: 'Roboto',
                                 color: Colors.white,
                                 fontSize: 22.0,
                               ),
@@ -47,8 +47,10 @@ class ScheduleCalendarsubScreen extends StatelessWidget {
                         child: Text(
                           '출발일',
                           style: FlutterFlowTheme.of(context).bodyText1.copyWith(
+                                fontFamily: 'Poppins',
                                 color: Colors.white,
-                                fontSize: 8.0,
+                                fontSize: 8,
+                                fontWeight: FontWeight.w100,
                               ),
                         ),
                       ),

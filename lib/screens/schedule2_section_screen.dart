@@ -90,40 +90,12 @@ class ScheduleSectionScreen extends StatelessWidget {
                     alignment: AlignmentDirectional(0, 0),
                     child: TextFormField(
                       initialValue: '천안아산',
-                      // controller: textController,
-                      // onChanged: (_) => EasyDebounce.debounce(
-                      //   'textController',
-                      //   Duration(milliseconds: 2000),
-                      //   () => setState(() {}),
-                      // ),
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
                       ),
-                      // decoration: InputDecoration(
-                      //   enabledBorder: OutlineInputBorder(
-                      //     borderSide: BorderSide(
-                      //       color: Color(0x00000000),
-                      //       width: 1,
-                      //     ),
-                      //     borderRadius: const BorderRadius.only(
-                      //       topLeft: Radius.circular(4.0),
-                      //       topRight: Radius.circular(4.0),
-                      //     ),
-                      //   ),
-                      //   // focusedBorder: OutlineInputBorder(
-                      //   //   borderSide: BorderSide(
-                      //   //     color: Color(0x00000000),
-                      //   //     width: 1,
-                      //   //   ),
-                      //   //   borderRadius: const BorderRadius.only(
-                      //   //     topLeft: Radius.circular(4.0),
-                      //   //     topRight: Radius.circular(4.0),
-                      //   //   ),
-                      //   // ),
-                      // ),
                       style: FlutterFlowTheme.of(context).bodyText1.copyWith(
                             fontFamily: 'Poppins',
                             color: Color(0xFF004676),
@@ -147,7 +119,6 @@ class ScheduleSectionScreen extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  width: 100,
                   height: 50,
                   decoration: BoxDecoration(),
                   child: Align(

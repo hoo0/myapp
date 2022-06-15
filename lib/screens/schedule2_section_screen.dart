@@ -83,9 +83,9 @@ class ScheduleSectionScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                  ),
+                  width: 100,
+                  height: 50,
+                  decoration: BoxDecoration(),
                   child: Align(
                     alignment: AlignmentDirectional(0, 0),
                     child: TextFormField(

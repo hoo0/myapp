@@ -44,7 +44,7 @@ class ScheduleCalendarsubScreen extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0, 1),
+                        alignment: AlignmentDirectional(1, 1),
                         child: Text(
                           '출발일',
                           textAlign: TextAlign.center,

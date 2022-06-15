@@ -25,6 +25,7 @@ class ScheduleCalendarsubScreen extends StatelessWidget {
                 Container(
                   width: 50,
                   height: 50,
+                  alignment: AlignmentDirectional(0, 0),
                   decoration: BoxDecoration(
                     color: Color(0xFF008EDA),
                   ),

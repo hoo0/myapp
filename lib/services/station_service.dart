@@ -51,11 +51,21 @@ class StationService {
   }
 
   static Future<void> getStationVersion() async {
-    newVersion = await NetworkService.getData('$baseUrl$versionUrl?Device=$device').then((response) => jsonDecode(response.data));
+    newVersion = await NetworkService.getData2(
+      '$baseUrl$versionUrl',
+      {
+        'Device': device,
+      },
+    ).then((response) => jsonDecode(response.data));
   }
 
   static Future<void> getStationData() async {
-    newStation = await NetworkService.getData('$baseUrl$stationUrl?Device=$device').then((response) => jsonDecode(response.data));
+    newStation = await NetworkService.getData2(
+      '$baseUrl$stationUrl',
+      {
+        'Device': device,
+      },
+    ).then((response) => jsonDecode(response.data));
   }
 
   static void makeStationMap() {

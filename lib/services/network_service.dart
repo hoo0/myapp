@@ -44,6 +44,33 @@ class NetworkService {
     }
   }
 
+  static Future getData2(String url, Map<String, dynamic>? queryParameters) async {
+    debugPrint('getData: url=$url');
+    debugPrint('getData: queryParameters=$queryParameters');
+
+    if (isWeb) {
+      if (queryParameters != null) {
+        queryParameters['path'] = Uri.encodeComponent(url);
+      }
+      url = webmodeUrl + '/get';
+
+      debugPrint('getData:web: url=$url');
+      debugPrint('getData:web: queryParameters=$queryParameters');
+    }
+
+    Response response = await dio.get(url, queryParameters: queryParameters);
+    // debugPrint('getData: '+ response.headers.toString());
+    debugPrint('response.statusCode=${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      debugPrint('getData: response.statusCode=${response.statusCode}');
+      debugPrint('getData: response=$response');
+      throw Exception('statusCode error[$response.statusCode]');
+    }
+  }
+
   static Future postData(String url, Map<String, dynamic>? queryParameters) async {
     debugPrint('postData: url=$url');
     debugPrint('postData: queryParameters=$queryParameters');
@@ -52,11 +79,11 @@ class NetworkService {
       if (queryParameters != null) {
         queryParameters['path'] = Uri.encodeComponent(url);
       }
-
       url = webmodeUrl + '/post';
+
+      debugPrint('postData:web: url=$url');
+      debugPrint('postData:web: queryParameters=$queryParameters');
     }
-    debugPrint('postData: url=$url');
-    debugPrint('postData: queryParameters=$queryParameters');
 
     Response response = await dio.post(url, queryParameters: queryParameters);
     // debugPrint(response.headers.toString());

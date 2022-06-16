@@ -11,10 +11,19 @@ class LoginService {
     required String password,
   }) async {
     if (id == '' || password == '') {
-      return {'status': 'FAIL', 'message': 'input null'};
+      return {
+        'status': 'FAIL',
+        'message': 'input null'
+      };
     }
 
-    var loginData = NetworkService.postData(url, {'id': id, 'password': password}).then((response) => jsonDecode(response.data));
+    var loginData = NetworkService.postData(
+      url,
+      {
+        'id': id,
+        'password': password,
+      },
+    ).then((response) => jsonDecode(response.data));
     return loginData;
   }
 }

@@ -51,7 +51,7 @@ class StationService {
   }
 
   static Future<void> getStationVersion() async {
-    newVersion = await NetworkService.getData2(
+    newVersion = await NetworkService.get(
       '$baseUrl$versionUrl',
       {
         'Device': device,
@@ -60,7 +60,7 @@ class StationService {
   }
 
   static Future<void> getStationData() async {
-    newStation = await NetworkService.getData2(
+    newStation = await NetworkService.get(
       '$baseUrl$stationUrl',
       {
         'Device': device,

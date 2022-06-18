@@ -44,7 +44,7 @@ class NetworkService {
     }
   }
 
-  static Future getData2(String url, Map<String, dynamic>? queryParameters) async {
+  static Future get(String url, Map<String, dynamic>? queryParameters) async {
     debugPrint('getData: url=$url');
     debugPrint('getData: queryParameters=$queryParameters');
 
@@ -71,7 +71,7 @@ class NetworkService {
     }
   }
 
-  static Future postData(String url, Map<String, dynamic>? queryParameters) async {
+  static Future post(String url, Map<String, dynamic>? queryParameters) async {
     debugPrint('postData: url=$url');
     debugPrint('postData: queryParameters=$queryParameters');
 

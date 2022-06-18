@@ -17,7 +17,7 @@ class LoginService {
       };
     }
 
-    var loginData = NetworkService.postData(
+    var loginData = NetworkService.post(
       url,
       {
         'id': id,

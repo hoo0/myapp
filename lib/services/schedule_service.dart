@@ -15,10 +15,21 @@ class ScheduleService {
     required String dptStn,
     required String arvStn,
   }) async {
-    return NetworkService.getData(
-      '$baseUrl$url?Device=$device&Version=$version&radJobId=1'
-      '&txtMenuId=11&txtGoAbrdDt=$dptDt&txtGoHour=${dptTm}00'
-      '&txtGoStart=$dptStn&txtGoEnd=$arvStn&txtTrnGpCd=$trnGpCd&txtSeatAttCd_4=015&txtPsgFlg_1=1&',
+    return NetworkService.get(
+      '$baseUrl$url',
+      {
+        'Device': device,
+        'Version': version,
+        'radJobId': '1',
+        'txtMenuId': '11',
+        'txtGoAbrdDt': dptDt,
+        'txtGoHour': '${dptTm}00',
+        'txtGoStart': dptStn,
+        'txtGoEnd': arvStn,
+        'txtTrnGpCd': trnGpCd,
+        'txtSeatAttCd_4': '015',
+        'txtPsgFlg_1': '1',
+      },
     ).then((response) => jsonDecode(response.data));
   }
 }

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-
 import '../constants.dart';
 import 'network_service.dart';
 
@@ -13,9 +11,16 @@ class TrainScheduleService {
     required String trnNo,
     required String trnGpCd,
   }) async {
-    return NetworkService.getData(
-      '$baseUrl$url?Device=$device&Version=$version&radJobId=1'
-      '&txtRunDt=$runDt&txtTrnNo=$trnNo&txtTrnGpCd=$trnGpCd',
+    return NetworkService.get(
+      '$baseUrl$url',
+      {
+        'Device': device,
+        'Version': version,
+        'radJobId': '1',
+        'txtRunDt': runDt,
+        'txtTrnNo': trnNo,
+        'txtTrnGpCd': trnGpCd,
+      },
     ).then((response) => jsonDecode(response.data));
   }
 }

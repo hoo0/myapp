@@ -13,7 +13,7 @@ class SeatService {
     required Train train,
     required Srcar srcar,
   }) async {
-    return NetworkService.postData(
+    return NetworkService.post(
       '$mtitBaseUrl$url',
       {
         'version': mtitVersion,
